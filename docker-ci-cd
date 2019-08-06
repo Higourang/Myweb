@@ -3,7 +3,7 @@ node{
    stage('SCM Checkout'){
         git branch: 'master', 
 	        credentialsId: 'javahometech',
-	        url: 'https://github.com/javahometech/myweb'
+	        url: 'https://github.com/Higourang/Myweb'
    }
    stage('Maven Build'){
         def mvnHome = tool name: 'maven3', type: 'maven'
@@ -11,18 +11,18 @@ node{
 		sh 'mv target/myweb*.war target/myweb.war'
    }
    stage('Build Docker Image'){
-     sh 'docker build -t kammana/myweb:5.0.0 .'
+     sh 'docker build -t dockergourang/myweb:5.0.0 .'
    }
    stage('Upload To DockerHub'){
      
-      sh "docker login -u kammana -p Cloud@1234"
-      sh "docker push kammana/myweb:5.0.0"
+      sh "docker login -u dockergourang -p Cloud@1234"
+      sh "docker push dockergourang/myweb:5.0.0"
    }
    
    stage('Deploy to Dev'){
        sshagent(['tomcat-dev']) {
 	   def dockeRm = "ssh ec2-user@172.31.14.131 docker rm -f myweb"
-	   def dockeRun = "ssh ec2-user@172.31.14.131 docker run -d -p 80:8080 --name myweb kammana/myweb:5.0.0"
+	   def dockeRun = "ssh ec2-user@172.31.14.131 docker run -d -p 80:8080 --name myweb dockergourang/myweb:5.0.0"
 	   sh "${dockeRm}"
 	   sh "${dockeRun}"	
 	  }
