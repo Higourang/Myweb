@@ -9,10 +9,9 @@
 	<url>http://maven.apache.org</url>
 	
 	<properties>
-		<docker.image.prefix>kammana</docker.image.prefix>
+		<docker.image.prefix>dockergourang</docker.image.prefix>
 	</properties>	
 	<dependencies>
-
 		
 		<dependency>
 			<groupId>junit</groupId>
